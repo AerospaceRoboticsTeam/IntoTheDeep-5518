@@ -34,17 +34,17 @@ public class AR_Arm_Fisher
     /** Angle of second Joint Starting Position */
     public static double SECOND_JOINT_START = 0;
     /** Angle of first Joint Active Position */
-    public static double FIRST_JOINT_ACTIVE = -100.14623;
+    public static double FIRST_JOINT_ACTIVE = -100;
     /** Angle of second Joint Active Position */
-    public static double SECOND_JOINT_ACTIVE = -54.17841;
+    public static double SECOND_JOINT_ACTIVE = -54;
     /** Angle of first Joint Deploy Position */
-    public static double FIRST_JOINT_DEPLOY = -165;
+    public static double FIRST_JOINT_DEPLOY = -155;
     /** Angle of second Joint Deploy Position */
     public static double SECOND_JOINT_DEPLOY = -170;
     /** Angle of first Joint Grab Position */
-    public static double FIRST_JOINT_GRAB = -36.438735;
+    public static double FIRST_JOINT_GRAB = -100;
     /** Angle of second Joint Grab Position */
-    public static double SECOND_JOINT_GRAB = -107.062584259;
+    public static double SECOND_JOINT_GRAB = -140;
 
     /** Angle of first Joint Deploy Position */
     public static double FIRST_JOINT_MID = -51;
@@ -55,7 +55,7 @@ public class AR_Arm_Fisher
 
     public static double SECOND_JOINT_DEPLOY_1 = 43.57;
 
-    public static double P1 = 0.003, I1 = 0.05, D1 = 0.0001;
+    public static double P1 = 0.01, I1 = 0.05, D1 = 0.0001;
     public static double F1 = 0.05;
 
     public static double P2 = 0.001, I2 = 0.05, D2 = 0.0001;
@@ -107,7 +107,7 @@ public class AR_Arm_Fisher
         this.bot = iBot;
 
         // Declare instances of the two joints.
-        this.jointFirst = new AR_Joint(this.bot, "first_joint", P1, I1, D1, F1, true);
+        this.jointFirst = new AR_Joint(this.bot, "first_joint", P1, I1, D1, F1, false);
         this.jointSecond = new AR_Joint(this.bot, "second_joint", P2, I2, D2, F2, false);
         leftGripper = bot.hardwareMap.crservo.get("left_gripper");
         rightGripper = bot.hardwareMap.crservo.get("right_gripper");
@@ -285,9 +285,9 @@ public class AR_Arm_Fisher
         }
             
     }
-    public void lockInward(){
-        AR_PIDController setJointContinuous ;
-        setJointContinuous.setJointContinuous(true);
-    }
+//    public void lockInward(){
+//        AR_PIDController setJointContinuous ;
+//        setJointContinuous.setJointContinuous(true);
+//    }
 
 }

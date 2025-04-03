@@ -30,7 +30,7 @@ public class TeleOp_5518_IK extends LinearOpMode
 
         waitForStart();
         if (isStopRequested()) return;
-
+        arm.setArmStartPos();
         while (opModeIsActive())
         {
             //telemetry.addData("currentState", currentState);

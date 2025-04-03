@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Libs.AR;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 /**
  * This class create a AR_Joint object that is used to encapsulate all the code used to control and
@@ -36,7 +37,7 @@ public class AR_Joint
         this.jointMotor = iBot.hardwareMap.dcMotor.get(iJointName);
         this.jointMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER); // Not needed but left here for future additions if needed.
         this.jointMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);  // This tells the motor to run with raw power values and not to listen to the built in encoders. We can still get the data we need from the encoders.
-
+        this.jointMotor.setDirection(DcMotor.Direction.REVERSE);
         // Instantiate new PID Controller for this joint.
         this.newPID = new AR_PIDController(iBot, jointMotor, iJointName, iP, iI, iD, iF, fuzzyLogicActive);
     }
