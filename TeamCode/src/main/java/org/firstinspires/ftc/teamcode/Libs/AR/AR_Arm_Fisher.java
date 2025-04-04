@@ -34,35 +34,33 @@ public class AR_Arm_Fisher
     /** Angle of second Joint Starting Position */
     public static double SECOND_JOINT_START = 0;
     /** Angle of first Joint Active Position */
-    public static double FIRST_JOINT_ACTIVE = -100;
+    public static double FIRST_JOINT_ACTIVE = -110; // -100, -90
     /** Angle of second Joint Active Position */
-    public static double SECOND_JOINT_ACTIVE = -54;
+    public static double SECOND_JOINT_ACTIVE = -100;
     /** Angle of first Joint Deploy Position */
-    public static double FIRST_JOINT_DEPLOY = -155;
+    public static double FIRST_JOINT_DEPLOY = -155; //155
     /** Angle of second Joint Deploy Position */
-    public static double SECOND_JOINT_DEPLOY = -170;
+    public static double SECOND_JOINT_DEPLOY = -110;
     /** Angle of first Joint Grab Position: Should be fined tuned a little more.*/
-    public static double FIRST_JOINT_GRAB = -100;
+    public static double FIRST_JOINT_GRAB = -80; // 100
     /** Angle of second Joint Grab Position */
-    public static double SECOND_JOINT_GRAB = -140;
-
-
+    public static double SECOND_JOINT_GRAB = -160; // -140
+    public static double FIRST_JOINT_READY = -80; // 100
+    /** Angle of second Joint Grab Position */
+    public static double SECOND_JOINT_READY = -130; // -140
 
     /** Angle of first Joint Deploy Position */
 
-    public static double FIRST_JOINT_HANG = -51;
+    public static double FIRST_JOINT_HANG = -100;
     /** Angle of second Joint Deploy Position */
-    public static double SECOND_JOINT_HANG = -83;
+    public static double SECOND_JOINT_HANG = -120;
     // Todo: Secondary Priority: Perfect Specimen Grabbing Angle (Ideally no decimals)
-    public static double FIRST_JOINT_SPECIMEN_GRAB = 43;  // Unsure what it was used for
-
-    /** Angle of second Joint Deploy Position */
-
-    public static double SECOND_JOINT_SPECIMEN_GRAB = 43; // Unsure what it was used for
+    public static double FIRST_JOINT_SPECIMEN_GRAB = -51;  // Unsure what it was used for
+    public static double SECOND_JOINT_SPECIMEN_GRAB = -83; // Unsure what it was used for
 
     // Todo: MAIN PRIORITY - TUNE EACH VALUE OF PIDF IN CHRONOLOGICAL ORDER OF P, I, D, AND F FOR BOTH MOTORS.
     // Current Test: P1 is over-shooting a little, needs to be slightly reduced.
-    public static double P1 = 0.01, I1 = 0.05, D1 = 0.0001;
+    public static double P1 = 0.006, I1 = 0.1, D1 = 0.001;
     public static double F1 = 0.05;
 
     public static double P2 = 0.001, I2 = 0.05, D2 = 0.0001;
@@ -74,6 +72,7 @@ public class AR_Arm_Fisher
     public static int DEPLOY = 3;
     public static int HANG = 4;
     public static int GRAB_SPECIMEN = 5;
+    public static int READY = 6;
     public static int NONE = 0;
     public boolean pressed = false;
 
@@ -128,7 +127,7 @@ public class AR_Arm_Fisher
         int green = sensor.green();
         int blue = sensor.blue();
 
-        if (red > green && red > blue) {
+        if (red > green && red > blue && red > 175) {
             return 0; // Red detected
         } else if (blue > red && blue > green) {
             return 1; // Blue detected
@@ -260,6 +259,19 @@ public class AR_Arm_Fisher
         if( currentState != AR_Arm_Fisher.HANG ) {
             lastState = currentState;
             currentState = AR_Arm_Fisher.HANG;
+
+        }
+    }
+    public void setArmReadyPos( )
+    {
+        // This is used for both aiding in hanging the robot during endgame and also to hang specimen (not 100% confirmed and approved for strategy yet).
+        // Todo: This needs to be carefully tested before we run the code to make sure the motor direction is correct, etc.
+        this.targetFirst = FIRST_JOINT_READY;
+        this.targetSecond = SECOND_JOINT_READY;
+
+        if( currentState != AR_Arm_Fisher.READY ) {
+            lastState = currentState;
+            currentState = AR_Arm_Fisher.READY;
 
         }
     }

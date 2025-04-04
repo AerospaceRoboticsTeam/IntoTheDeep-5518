@@ -51,8 +51,8 @@ public class TeleOp_5518_Main extends LinearOpMode
                 telemetry.addData("Arm Status", "Set Arm Active");
             }
             else if (gamepad2.dpad_left) {
-                arm.setArmStartPos();
-                telemetry.addData("Arm Status", "Set Arm Start");
+                arm.setArmReadyPos();
+                telemetry.addData("Arm Status", "Set Arm Ready");
             }
             else if (gamepad2.dpad_down) {
                 arm.setArmGrabPos();
@@ -63,11 +63,17 @@ public class TeleOp_5518_Main extends LinearOpMode
                 arm.setArmHangPos();
                 telemetry.addData("Arm Status", "Set Arm To Hanging and/or Ascent Mode");
             }
+            else if (gamepad2.circle) {
+                arm.setArmStartPos();
+                telemetry.addData("Arm Status", "Set Arm Start");
+            }
+            /*
             // Todo: Test if this specimen grab works, and if time is available after other priorities, attempt to test and fine tune angles for this.
-            else if (gamepad2.circle){
+            else if (gamepad2.triangle){
                 arm.setArmSpecimenGrab();
                 telemetry.addData("Arm Status", "Set Arm For Specimen Grab");
             }
+             */
             // Based on the inputs, the state changes and updates the position of the arm accordingly.
             arm.updateArmPos();
 

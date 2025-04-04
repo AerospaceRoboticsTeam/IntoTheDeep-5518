@@ -92,8 +92,11 @@ public class AR_PIDController
         double ff = Math.cos( Math.toRadians( target * ticksPerDegree ) ) * f;  // Feedforward
         double power = pid + ff;  // Total power from PID and feedforward
 
-        if ((this.jointName.equals("first_joint")) && (iLastState == AR_Arm_Fisher.DEPLOY) && ((armPos / ticksPerDegree) < target - 10)) {
+        if ((this.jointName.equals("first_joint")) && (iLastState == AR_Arm_Fisher.DEPLOY) && ((armPos / ticksPerDegree) < target - 40)) {
             power = power * 0.05;  // Throttle power back for arm descent.
+        }
+        if ((this.jointName.equals("first_joint")) && (iCurrentState == AR_Arm_Fisher.START)) {
+            power = 0;  // Throttle power back for arm descent.
         }
 
 // ToDo: Not sure why this code was added...

@@ -182,9 +182,9 @@ public class AR_Arm_Fisher_Test
         this.targetFirst = FIRST_JOINT_MID;
         this.targetSecond = SECOND_JOINT_MID;
 
-        if( currentState != AR_Arm_Fisher.MID ) {
+        if( currentState != AR_Arm_Fisher_Test.MID ) {
             lastState = currentState;
-            currentState = AR_Arm_Fisher.MID;
+            currentState = AR_Arm_Fisher_Test.MID;
         }
     }
 
