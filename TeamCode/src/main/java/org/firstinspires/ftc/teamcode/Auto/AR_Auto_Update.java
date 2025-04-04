@@ -10,9 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import android.util.Log;
 
-@Autonomous(name = "AR_Auto_Sujay", group = "Robot")
-public class AR_Auto_Sujay extends LinearOpMode {
-    private static final Logger log = LoggerFactory.getLogger(AR_Auto_Sujay.class);
+@Autonomous(name = "AR_Auto_Update", group = "Robot")
+public class AR_Auto_Update extends LinearOpMode {
+    private static final Logger log = LoggerFactory.getLogger(AR_Auto_Update.class);
     public static final int DEPLOY = 3, GRAB = 2, ACTIVE = 1, START = 0, point0 = 4, point1 = 5, point2 = 6;
     public static int currentState = 0, lastState = 0;
     // Ideal Final State Machine: private int[] stateMachine = {START, ACTIVE, point0, DEPLOY, ACTIVE, point1};

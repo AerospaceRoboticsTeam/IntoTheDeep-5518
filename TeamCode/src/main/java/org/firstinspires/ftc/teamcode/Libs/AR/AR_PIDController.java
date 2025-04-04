@@ -11,6 +11,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  *
  * Creation Date: 11/3/2024
  */
+
+// So far works, please do not make any major changes, only to the PID values passed in the initialization stage.
 public class AR_PIDController
 {
     private PIDController controller;
@@ -45,6 +47,7 @@ public class AR_PIDController
     }
 
     private void fuzzyLogicAutotune(double error, double errorRate) {
+        // Todo: After-Comp Priority: Fix Auto-Tuner - It causes more twitching, and drastically changes values. The increments need to be changed, and time gaps need to be provided.
         if (error > 5 && errorRate > 2) {
             p = 1.0; i = 0.5; d = 0.2;  // High gains for fast response
         } else if (error > 2 && errorRate > 1) {

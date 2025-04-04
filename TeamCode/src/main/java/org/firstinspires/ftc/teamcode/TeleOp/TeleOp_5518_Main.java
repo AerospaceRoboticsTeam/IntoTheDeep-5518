@@ -2,18 +2,13 @@ package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-
-import android.util.Log;
 
 import org.firstinspires.ftc.teamcode.Libs.AR.AR_Arm_Fisher;
 import org.firstinspires.ftc.teamcode.Libs.AR.MecanumDrive_5518;
 
-@TeleOp(name = "TeleOp_5518_IK", group = "TeleOp")
-public class TeleOp_5518_IK extends LinearOpMode
+@TeleOp(name = "TeleOp_5518_Main", group = "TeleOp")
+public class TeleOp_5518_Main extends LinearOpMode
 {
     private MecanumDrive_5518 mecanumDrive;
     private AR_Arm_Fisher arm;
@@ -30,13 +25,15 @@ public class TeleOp_5518_IK extends LinearOpMode
 
         waitForStart();
         if (isStopRequested()) return;
+        // Sets arm position to the default state for initialization, preventing the arm from driving inwards. If you smell smoke, the motor is probably overheating and driving inwards.
         arm.setArmStartPos();
         while (opModeIsActive())
         {
             //telemetry.addData("currentState", currentState);
             //telemetry.addData("lastState", lastState);
             // This call is made every loop and will read the current control pad values (for driving)
-            // and update the drivetrain with those values.
+            // and update the drivetrain with those values. Enable if you need insights on the state machine.
+
             mecanumDrive.drive();
             if (gamepad1.left_trigger != 0) {
                 mecanumDrive.setBoost(1);
@@ -61,10 +58,17 @@ public class TeleOp_5518_IK extends LinearOpMode
                 arm.setArmGrabPos();
                 telemetry.addData("Arm Status", "Set Arm Grab");
             }
+            // Todo: Test if this can hang specimen consistently
             else if (gamepad2.square) {
-                arm.setArmMidPos();
-                telemetry.addData("Arm Status", "Set Arm Mid");
+                arm.setArmHangPos();
+                telemetry.addData("Arm Status", "Set Arm To Hanging and/or Ascent Mode");
             }
+            // Todo: Test if this specimen grab works, and if time is available after other priorities, attempt to test and fine tune angles for this.
+            else if (gamepad2.circle){
+                arm.setArmSpecimenGrab();
+                telemetry.addData("Arm Status", "Set Arm For Specimen Grab");
+            }
+            // Based on the inputs, the state changes and updates the position of the arm accordingly.
             arm.updateArmPos();
 
             if (gamepad2.left_trigger > 0.1) {

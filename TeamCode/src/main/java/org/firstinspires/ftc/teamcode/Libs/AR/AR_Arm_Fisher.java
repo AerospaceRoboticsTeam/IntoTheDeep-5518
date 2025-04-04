@@ -41,20 +41,27 @@ public class AR_Arm_Fisher
     public static double FIRST_JOINT_DEPLOY = -155;
     /** Angle of second Joint Deploy Position */
     public static double SECOND_JOINT_DEPLOY = -170;
-    /** Angle of first Joint Grab Position */
+    /** Angle of first Joint Grab Position: Should be fined tuned a little more.*/
     public static double FIRST_JOINT_GRAB = -100;
     /** Angle of second Joint Grab Position */
     public static double SECOND_JOINT_GRAB = -140;
 
+
+
     /** Angle of first Joint Deploy Position */
-    public static double FIRST_JOINT_MID = -51;
+
+    public static double FIRST_JOINT_HANG = -51;
     /** Angle of second Joint Deploy Position */
-    public static double SECOND_JOINT_MID = -83;
-    public static double FIRST_JOINT_DEPLOY_1 = 43.08;
+    public static double SECOND_JOINT_HANG = -83;
+    // Todo: Secondary Priority: Perfect Specimen Grabbing Angle (Ideally no decimals)
+    public static double FIRST_JOINT_SPECIMEN_GRAB = 43;  // Unsure what it was used for
+
     /** Angle of second Joint Deploy Position */
 
-    public static double SECOND_JOINT_DEPLOY_1 = 43.57;
+    public static double SECOND_JOINT_SPECIMEN_GRAB = 43; // Unsure what it was used for
 
+    // Todo: MAIN PRIORITY - TUNE EACH VALUE OF PIDF IN CHRONOLOGICAL ORDER OF P, I, D, AND F FOR BOTH MOTORS.
+    // Current Test: P1 is over-shooting a little, needs to be slightly reduced.
     public static double P1 = 0.01, I1 = 0.05, D1 = 0.0001;
     public static double F1 = 0.05;
 
@@ -65,8 +72,8 @@ public class AR_Arm_Fisher
     public static int ACTIVE = 1;
     public static int GRAB = 2;
     public static int DEPLOY = 3;
-    public static int MID = 4;
-    public static int DEPLOY_1 = 5;
+    public static int HANG = 4;
+    public static int GRAB_SPECIMEN = 5;
     public static int NONE = 0;
     public boolean pressed = false;
 
@@ -145,9 +152,10 @@ public class AR_Arm_Fisher
     public void turnGreen(){
         light.greenLight();
     }
+    // Todo: Check and correct this program to see if the default/neutral color is white, it was observed to be red...
 
     public void turnNeutral(){
-        light.policeLights();
+        light.whiteLight();
     }
 
     public void updateLight(){
@@ -172,6 +180,8 @@ public class AR_Arm_Fisher
      * @param firstJoint The position of the first joint in degrees.
      * @param secondJoint The position of the second joint in degrees.
      */
+
+    // The setArmCustomPos method is designed to help develop any code for specific angles in emergency scenarios.
     public void setArmCustomPos(int firstJoint, int secondJoint )
     {
         this.targetFirst = firstJoint; //degrees
@@ -200,7 +210,7 @@ public class AR_Arm_Fisher
         // Todo: This needs to be carefully tested before we run the code to make sure the motor direction is correct, etc.
         this.targetFirst = FIRST_JOINT_GRAB;
         this.targetSecond = SECOND_JOINT_GRAB;
-
+        // Todo: Fine Tune Angles for Grabbing with Hover Room: With a buffer set to ensure there is no interference with the bottom rim of the submersible.
         if( currentState != AR_Arm_Fisher.GRAB ) {
             lastState = currentState;
             currentState = AR_Arm_Fisher.GRAB;
@@ -240,15 +250,16 @@ public class AR_Arm_Fisher
             currentState = AR_Arm_Fisher.START;
         }
     }
-    public void setArmMidPos( )
+    public void setArmHangPos( )
     {
+        // This is used for both aiding in hanging the robot during endgame and also to hang specimen (not 100% confirmed and approved for strategy yet).
         // Todo: This needs to be carefully tested before we run the code to make sure the motor direction is correct, etc.
-        this.targetFirst = FIRST_JOINT_MID;
-        this.targetSecond = SECOND_JOINT_MID;
+        this.targetFirst = FIRST_JOINT_HANG;
+        this.targetSecond = SECOND_JOINT_HANG;
 
-        if( currentState != AR_Arm_Fisher.MID ) {
+        if( currentState != AR_Arm_Fisher.HANG ) {
             lastState = currentState;
-            currentState = AR_Arm_Fisher.MID;
+            currentState = AR_Arm_Fisher.HANG;
 
         }
     }
@@ -276,18 +287,20 @@ public class AR_Arm_Fisher
         leftGripper.setPower(0);
         rightGripper.setPower(0);
     }
-    public void setArmAscentStep1(){
-        this.targetFirst = FIRST_JOINT_DEPLOY_1;
-        this.targetSecond = SECOND_JOINT_DEPLOY_1;
-        if (currentState != AR_Arm_Fisher.DEPLOY_1) {
+
+    // .
+    public void setArmSpecimenGrab(){
+        this.targetFirst = FIRST_JOINT_SPECIMEN_GRAB;
+        this.targetSecond = SECOND_JOINT_SPECIMEN_GRAB;
+        if (currentState != AR_Arm_Fisher.GRAB_SPECIMEN) {
             lastState = currentState;
-            currentState = AR_Arm_Fisher.DEPLOY_1;
+            currentState = AR_Arm_Fisher.GRAB_SPECIMEN;
         }
             
     }
+}
 //    public void lockInward(){
 //        AR_PIDController setJointContinuous ;
 //        setJointContinuous.setJointContinuous(true);
 //    }
 
-}
