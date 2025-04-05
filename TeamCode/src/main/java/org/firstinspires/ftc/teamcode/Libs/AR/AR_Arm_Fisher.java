@@ -1,5 +1,8 @@
 package org.firstinspires.ftc.teamcode.Libs.AR;
 
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
@@ -19,7 +22,7 @@ import org.firstinspires.ftc.teamcode.Libs.AR.Archive.AR_Arm;
  * Creation Date: 11/3/2024
  */
 
-
+@Config
 public class AR_Arm_Fisher
 {
     /** Currently, the arm's rest is at approx. 43 degree up pointing straight down. That mean gravity is
@@ -45,17 +48,20 @@ public class AR_Arm_Fisher
     public static double FIRST_JOINT_DEPLOY_1 = -150; //155
     /** Angle of second Joint Deploy Position */
     public static double SECOND_JOINT_DEPLOY_1 = -125; // -110
+    public static double FIRST_JOINT_DEPLOY_2 = -150; //155
+    /** Angle of second Joint Deploy Position */
+    public static double SECOND_JOINT_DEPLOY_2 = -135; // -110
     /** Angle of first Joint Grab Position: Should be fined tuned a little more.*/
     public static double FIRST_JOINT_GRAB = -80; // 100
     /** Angle of second Joint Grab Position */
-    public static double SECOND_JOINT_GRAB = -115; // -160, -140
+    public static double SECOND_JOINT_GRAB = -150; // -160, -140
     public static double FIRST_JOINT_READY = -80; // 100
     /** Angle of second Joint Grab Position */
     public static double SECOND_JOINT_READY = -105; // -130, -140
     /** Angle of first Joint Deploy Position */
-    public static double FIRST_JOINT_HANG = -120;
+    public static double FIRST_JOINT_HANG = -140;
     /** Angle of second Joint Deploy Position */
-    public static double SECOND_JOINT_HANG = -130;
+    public static double SECOND_JOINT_HANG = -130; // -130
     // Todo: Secondary Priority: Perfect Specimen Grabbing Angle (Ideally no decimals)
     public static double FIRST_JOINT_SPECIMEN_GRAB = -51;  // Unsure what it was used for
     public static double SECOND_JOINT_SPECIMEN_GRAB = -83; // Unsure what it was used for
@@ -73,6 +79,7 @@ public class AR_Arm_Fisher
     public static int GRAB = 2;
     public static int DEPLOY = 3;
     public static int DEPLOY_1 = 7;
+    public static int DEPLOY_2 = 8;
     public static int HANG = 4;
     public static int GRAB_SPECIMEN = 5;
     public static int READY = 6;
@@ -120,6 +127,7 @@ public class AR_Arm_Fisher
         this.sensor = bot.hardwareMap.get(ColorSensor.class, "color_sensor");
         this.light = new AR_Light("status_light", iBot);
         // Set FTC Dashboard Telemetry
+        iBot.telemetry = new MultipleTelemetry(iBot.telemetry, FtcDashboard.getInstance().getTelemetry());
     }
 
     public int getDetectedColor() {
@@ -208,6 +216,16 @@ public class AR_Arm_Fisher
         if (currentState != AR_Arm_Fisher.DEPLOY_1) {
             lastState = currentState;
             currentState = AR_Arm_Fisher.DEPLOY_1;
+        }
+    }
+    public void setArmDeploy2Pos( ) {
+        // Todo: This needs to be carefully tested before we run the code to make sure the motor direction is correct, etc.
+        this.targetFirst = FIRST_JOINT_DEPLOY_2;
+        this.targetSecond = SECOND_JOINT_DEPLOY_2;
+
+        if (currentState != AR_Arm_Fisher.DEPLOY_2) {
+            lastState = currentState;
+            currentState = AR_Arm_Fisher.DEPLOY_2;
         }
     }
 

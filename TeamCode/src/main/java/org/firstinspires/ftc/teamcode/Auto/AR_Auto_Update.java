@@ -29,27 +29,32 @@ public class AR_Auto_Update extends LinearOpMode {
         if (isStopRequested()) return;
         while (opModeIsActive()) {
             //Start
-            while (time < 2)
+            while (time < 1){
+                drivetrain.turnToHeading(iBot, .5, 90);
+            }
+            while (time < 3)
                 drivetrain.driveStraight(iBot, .5, 10, 0);
             //Reach Bucket
-            while (time < 3) {
+            while (time < 4) {
                 arm.setArmDeployPos();
                 arm.updateArmPos();
             }
-            while (time < 5) {
+            while (time < 6) {
                 arm.setArmDeploy1Pos();
                 arm.updateArmPos();
             }
-            while (time < 7) {
+            while (time < 8) {
                 arm.grab();
                 arm.updateArmPos();
             }
-            while (time<9){
+            while (time < 10){
                 arm.rest();
                 arm.setArmActivePos();
+                arm.updateArmPos();
                 drivetrain.driveStraight(iBot, .5,-10,0);
             }
-            while (time<11){
+            while (time<12){
+                arm.setArmStartPos();
                 arm.updateArmPos();
             }
             //getSample(10,-90);

@@ -36,10 +36,10 @@ public class TeleOp_5518_Main extends LinearOpMode
 
             mecanumDrive.drive();
             if (gamepad1.left_trigger != 0) {
-                mecanumDrive.setBoost(1);
+                mecanumDrive.setBoost(.3);
             }
             else {
-                mecanumDrive.setBoost(0.5);
+                mecanumDrive.setBoost(.7);
             }
 
             if (gamepad2.cross) {
