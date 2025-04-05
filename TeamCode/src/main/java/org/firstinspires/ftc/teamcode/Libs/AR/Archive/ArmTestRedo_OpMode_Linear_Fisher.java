@@ -15,7 +15,6 @@ import org.firstinspires.ftc.teamcode.Libs.AR.AR_Arm_Fisher;
  * Creation Date: 11/3/2024
  ---------------------------------------------------------------------------------------------------
 */
-@TeleOp(name="ArmTestRedo_OpMode_Linear_Fisher", group="Linear OpMode")
 public class ArmTestRedo_OpMode_Linear_Fisher extends LinearOpMode
 {
     // Declare OpMode members.

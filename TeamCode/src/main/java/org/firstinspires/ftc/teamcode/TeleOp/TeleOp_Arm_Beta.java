@@ -1,19 +1,20 @@
-package org.firstinspires.ftc.teamcode.TeleOp.Test;
+package org.firstinspires.ftc.teamcode.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import org.firstinspires.ftc.teamcode.Libs.AR.AR_Arm_Fisher;
+
+import org.firstinspires.ftc.teamcode.TeleOp.Test.AR_Arm_Fisher_Test;
 
 @TeleOp(name = "TeleOp_Arm_Test", group = "TeleOp")
-public class TeleOp_Arm_Test extends LinearOpMode
+public class TeleOp_Arm_Beta extends LinearOpMode
 {
-    private AR_Arm_Fisher arm;
+    private AR_Arm_Fisher_Test arm;
 
     //@Override
     public void runOpMode()
     {
         // Initialize the arm
-        arm = new AR_Arm_Fisher(this);
+        arm = new AR_Arm_Fisher_Test(this);
 
         waitForStart();
         if (isStopRequested()) return;
@@ -25,12 +26,8 @@ public class TeleOp_Arm_Test extends LinearOpMode
 
             //**************************************************************************************
             // -------------------- Gamepad 2 Controls ---------------------------------------------
-            if (gamepad2.triangle) {
+            if (gamepad2.dpad_up) {
                 arm.setArmDeployPos();
-                telemetry.addData("Arm Status", "Set Arm Deploy");
-            }
-            else if (gamepad2.square) {
-                arm.setArmDeploy1Pos();
                 telemetry.addData("Arm Status", "Set Arm Deploy");
             }
             else if (gamepad2.dpad_right) {
@@ -44,6 +41,10 @@ public class TeleOp_Arm_Test extends LinearOpMode
             else if (gamepad2.dpad_down) {
                 arm.setArmGrabPos();
                 telemetry.addData("Arm Status", "Set Arm Grab");
+            }
+            else if (gamepad2.square) {
+                arm.setArmMidPos();
+                telemetry.addData("Arm Status", "Set Arm Mid");
             }
 
             //**************************************************************************************

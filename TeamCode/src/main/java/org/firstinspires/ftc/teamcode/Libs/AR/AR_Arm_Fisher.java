@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Libs.AR.AR_Joint;
 import org.firstinspires.ftc.teamcode.Libs.AR.Archive.AR_Arm;
@@ -36,31 +37,32 @@ public class AR_Arm_Fisher
     /** Angle of first Joint Active Position */
     public static double FIRST_JOINT_ACTIVE = -110; // -100, -90
     /** Angle of second Joint Active Position */
-    public static double SECOND_JOINT_ACTIVE = -100;
+    public static double SECOND_JOINT_ACTIVE = -80;
     /** Angle of first Joint Deploy Position */
-    public static double FIRST_JOINT_DEPLOY = -155; //155
+    public static double FIRST_JOINT_DEPLOY = -150; //155
     /** Angle of second Joint Deploy Position */
-    public static double SECOND_JOINT_DEPLOY = -110;
+    public static double SECOND_JOINT_DEPLOY = 0; // -110
+    public static double FIRST_JOINT_DEPLOY_1 = -150; //155
+    /** Angle of second Joint Deploy Position */
+    public static double SECOND_JOINT_DEPLOY_1 = -125; // -110
     /** Angle of first Joint Grab Position: Should be fined tuned a little more.*/
     public static double FIRST_JOINT_GRAB = -80; // 100
     /** Angle of second Joint Grab Position */
-    public static double SECOND_JOINT_GRAB = -160; // -140
+    public static double SECOND_JOINT_GRAB = -115; // -160, -140
     public static double FIRST_JOINT_READY = -80; // 100
     /** Angle of second Joint Grab Position */
-    public static double SECOND_JOINT_READY = -130; // -140
-
+    public static double SECOND_JOINT_READY = -105; // -130, -140
     /** Angle of first Joint Deploy Position */
-
-    public static double FIRST_JOINT_HANG = -100;
+    public static double FIRST_JOINT_HANG = -120;
     /** Angle of second Joint Deploy Position */
-    public static double SECOND_JOINT_HANG = -120;
+    public static double SECOND_JOINT_HANG = -130;
     // Todo: Secondary Priority: Perfect Specimen Grabbing Angle (Ideally no decimals)
     public static double FIRST_JOINT_SPECIMEN_GRAB = -51;  // Unsure what it was used for
     public static double SECOND_JOINT_SPECIMEN_GRAB = -83; // Unsure what it was used for
 
     // Todo: MAIN PRIORITY - TUNE EACH VALUE OF PIDF IN CHRONOLOGICAL ORDER OF P, I, D, AND F FOR BOTH MOTORS.
     // Current Test: P1 is over-shooting a little, needs to be slightly reduced.
-    public static double P1 = 0.006, I1 = 0.1, D1 = 0.001;
+    public static double P1 = 0.003, I1 = 0.05, D1 = 0.0001;
     public static double F1 = 0.05;
 
     public static double P2 = 0.001, I2 = 0.05, D2 = 0.0001;
@@ -70,6 +72,7 @@ public class AR_Arm_Fisher
     public static int ACTIVE = 1;
     public static int GRAB = 2;
     public static int DEPLOY = 3;
+    public static int DEPLOY_1 = 7;
     public static int HANG = 4;
     public static int GRAB_SPECIMEN = 5;
     public static int READY = 6;
@@ -93,10 +96,7 @@ public class AR_Arm_Fisher
     public AR_Joint getJointFirst() {
         return jointFirst;
     }
-    
-    
 
-    
     AR_Light light;
 
     private int lastState = START;
@@ -161,7 +161,6 @@ public class AR_Arm_Fisher
         light.updateLight();
     }
 
-
         /**
          * Return immediately and moves the joints to the desired location.
          */
@@ -198,6 +197,17 @@ public class AR_Arm_Fisher
         if (currentState != AR_Arm_Fisher.DEPLOY) {
             lastState = currentState;
             currentState = AR_Arm_Fisher.DEPLOY;
+        }
+    }
+
+    public void setArmDeploy1Pos( ) {
+        // Todo: This needs to be carefully tested before we run the code to make sure the motor direction is correct, etc.
+        this.targetFirst = FIRST_JOINT_DEPLOY_1;
+        this.targetSecond = SECOND_JOINT_DEPLOY_1;
+
+        if (currentState != AR_Arm_Fisher.DEPLOY_1) {
+            lastState = currentState;
+            currentState = AR_Arm_Fisher.DEPLOY_1;
         }
     }
 

@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.TeleOp.Test.AR_Arm_Fisher_Test;
+import org.firstinspires.ftc.teamcode.Libs.AR.AR_Arm_Fisher;
 import org.firstinspires.ftc.teamcode.Libs.AR.AutonomousDrivetrain_Sujay;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,22 +18,40 @@ public class AR_Auto_Update extends LinearOpMode {
     // Ideal Final State Machine: private int[] stateMachine = {START, ACTIVE, point0, DEPLOY, ACTIVE, point1};
     private int[] stateMachine = {START, ACTIVE, DEPLOY, ACTIVE};
     private LinearOpMode iBot;
-    private AR_Arm_Fisher_Test arm;
+    private AR_Arm_Fisher arm;
     private AutonomousDrivetrain_Sujay drivetrain;
 
     public void runOpMode() {
         iBot = this;
         drivetrain = new AutonomousDrivetrain_Sujay(iBot);
-        arm = new AR_Arm_Fisher_Test(iBot);
+        arm = new AR_Arm_Fisher(iBot);
         waitForStart();
         if (isStopRequested()) return;
         while (opModeIsActive()) {
             //Start
-            drivetrain.turnToHeading(iBot, .5, -90);
-            //sleep(2000);
-            drivetrain.driveStraight(iBot, .5, 20, 0);
+            while (time < 2)
+                drivetrain.driveStraight(iBot, .5, 10, 0);
             //Reach Bucket
-            //arm.setArmDeployPos();
+            while (time < 3) {
+                arm.setArmDeployPos();
+                arm.updateArmPos();
+            }
+            while (time < 5) {
+                arm.setArmDeploy1Pos();
+                arm.updateArmPos();
+            }
+            while (time < 7) {
+                arm.grab();
+                arm.updateArmPos();
+            }
+            while (time<9){
+                arm.rest();
+                arm.setArmActivePos();
+                drivetrain.driveStraight(iBot, .5,-10,0);
+            }
+            while (time<11){
+                arm.updateArmPos();
+            }
             //getSample(10,-90);
             //deploy();
             //getSample(12, -70);

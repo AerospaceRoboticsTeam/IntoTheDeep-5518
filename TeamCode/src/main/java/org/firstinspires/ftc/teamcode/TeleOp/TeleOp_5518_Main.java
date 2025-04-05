@@ -42,9 +42,13 @@ public class TeleOp_5518_Main extends LinearOpMode
                 mecanumDrive.setBoost(0.5);
             }
 
-            if (gamepad2.dpad_up) {
+            if (gamepad2.cross) {
                 arm.setArmDeployPos();
                 telemetry.addData("Arm Status", "Set Arm Deploy");
+            }
+            if (gamepad2.triangle){
+                arm.setArmDeploy1Pos();
+                telemetry.addData("Arm Status", "Set Arm Deploy1");
             }
             else if (gamepad2.dpad_right) {
                 arm.setArmActivePos();

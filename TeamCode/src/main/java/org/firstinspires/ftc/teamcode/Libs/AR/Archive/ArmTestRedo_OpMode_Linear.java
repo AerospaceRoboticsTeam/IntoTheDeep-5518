@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Creation Date: 11/3/2024
  ---------------------------------------------------------------------------------------------------
 */
-@TeleOp(name="ArmTestRedo with Lights: Linear OpMode", group="Linear OpMode")
 public class ArmTestRedo_OpMode_Linear extends LinearOpMode
 {
     // Declare OpMode members.
